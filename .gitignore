@@ -8,5 +8,5 @@
 /captures
 .externalNativeBuild
 external
-app/src/main/res/raw/ocat
+app/src/main/assets/ocat
 .idea
