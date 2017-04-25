@@ -1,10 +1,15 @@
 package io.github.arrase.onioncat.fragments;
 
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import io.github.arrase.onioncat.R;
@@ -32,6 +37,36 @@ public class SettingsFragment extends PreferenceFragment {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(OrbotHelper.getOrbotInstallIntent(mContext));
+                    return true;
+                }
+            });
+        }
+
+        // Onion
+        Preference onion = (Preference) findPreference(getString(R.string.pref_set_server_onion));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        final String domainName = preferences.getString(mContext.getString(R.string.pref_server_onion), null);
+
+        if (domainName != null) {
+            onion.setSummary(domainName);
+
+            onion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("onion", domainName);
+                    clipboard.setPrimaryClip(clip);
+
+                    Toast.makeText(mContext, R.string.domain_to_clipboard, Toast.LENGTH_LONG).show();
+
+                    return true;
+                }
+            });
+        } else {
+            onion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    // TODO: Start Orbot and configure onion
                     return true;
                 }
             });
