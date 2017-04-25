@@ -16,7 +16,6 @@ public class CheckDependenciesHelper {
         return OrbotHelper.isOrbotInstalled(context);
     }
 
-
     public static boolean checkServer(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return (preferences.getString(context.getString(R.string.pref_server_onion), null) != null);
