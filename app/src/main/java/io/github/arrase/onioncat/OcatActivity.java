@@ -18,6 +18,7 @@ import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.fragments.SettingsFragment;
 import io.github.arrase.onioncat.fragments.StartOcatFragment;
 import io.github.arrase.onioncat.helpers.CheckDependenciesHelper;
+import io.github.arrase.onioncat.helpers.InstallHelper;
 
 public class OcatActivity extends AppCompatActivity implements
         SettingsFragment.setOnionCallback {
@@ -34,8 +35,8 @@ public class OcatActivity extends AppCompatActivity implements
         mFragmentManager = getFragmentManager();
 
         File appBinHome = getDir(OcatConstant.BINARY_DIRECTORY, Application.MODE_PRIVATE);
-        if(appBinHome.mkdir()){
-
+        if (appBinHome.mkdir()) {
+            InstallHelper.copyAssets(this, appBinHome);
         }
 
         // Do not overlapping fragments.
