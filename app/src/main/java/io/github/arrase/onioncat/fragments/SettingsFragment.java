@@ -1,15 +1,18 @@
 package io.github.arrase.onioncat.fragments;
 
 
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import info.guardianproject.netcipher.proxy.OrbotHelper;
@@ -20,6 +23,8 @@ import io.github.arrase.onioncat.services.OrbotService;
 
 public class SettingsFragment extends PreferenceFragment {
     private Context mContext;
+    private LocalBroadcastManager localBroadcastManager;
+    private BroadcastReceiver startOrbotEnd;
 
     public SettingsFragment() {
 
@@ -69,8 +74,21 @@ public class SettingsFragment extends PreferenceFragment {
             onion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+
+                    startOrbotEnd = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            localBroadcastManager.unregisterReceiver(startOrbotEnd);
+                            // TODO
+                        }
+                    };
+
+                    localBroadcastManager.registerReceiver(
+                            startOrbotEnd, new IntentFilter(OcatConstant.START_ORBOT_END));
+
                     Intent intent = new Intent(mContext, OrbotService.class);
-                    intent.setAction(OcatConstant.SETUP_ONION_SERVICE);
+                    intent.setAction(OcatConstant.START_ORBOT);
                     mContext.startService(intent);
                     return true;
                 }

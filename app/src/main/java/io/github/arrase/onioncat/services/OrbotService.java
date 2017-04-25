@@ -3,6 +3,7 @@ package io.github.arrase.onioncat.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import info.guardianproject.netcipher.proxy.OrbotHelper;
@@ -14,7 +15,7 @@ public class OrbotService extends Service {
 
     private OrbotHelper orbotHelper;
     private int mStartId;
-    private Intent mStartIntent;
+    private LocalBroadcastManager broadcaster;
 
     private StatusCallback statusCallback = new StatusCallback() {
         private boolean waitPolipo = false; // Ugly fix
@@ -33,14 +34,8 @@ public class OrbotService extends Service {
                 waitPolipo = false;
             }
 
-            switch (mStartIntent.getAction()) {
-                case OcatConstant.SETUP_ONION_SERVICE:
-                    // TODO
-                    break;
-                case OcatConstant.RUN_OCAT_SERVICE:
-                    // TODO
-                    break;
-            }
+            broadcaster = LocalBroadcastManager.getInstance(OrbotService.this);
+            broadcaster.sendBroadcast(new Intent(OcatConstant.START_ORBOT_END));
 
             orbotHelper.removeStatusCallback(statusCallback);
             OrbotService.this.stopSelf(mStartId);
@@ -89,7 +84,6 @@ public class OrbotService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
         mStartId = startId;
-        mStartIntent = intent;
         orbotHelper.addStatusCallback(statusCallback);
         orbotHelper.init();
 
