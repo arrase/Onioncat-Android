@@ -2,9 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="io.github.arrase.onioncat.OcatActivity">
+
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:orderInCategory="9999"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 </menu>
