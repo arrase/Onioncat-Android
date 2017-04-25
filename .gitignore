@@ -8,4 +8,4 @@
 /captures
 .externalNativeBuild
 external
-app/src/main/res/raw/*
+app/src/main/res/raw/ocat
