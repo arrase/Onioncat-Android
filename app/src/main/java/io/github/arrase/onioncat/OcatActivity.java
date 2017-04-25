@@ -2,17 +2,23 @@ package io.github.arrase.onioncat;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.fragments.SettingsFragment;
 import io.github.arrase.onioncat.fragments.StartOcatFragment;
 import io.github.arrase.onioncat.helpers.CheckDependenciesHelper;
 
-public class OcatActivity extends AppCompatActivity {
+public class OcatActivity extends AppCompatActivity implements
+        SettingsFragment.setOnionCallback {
+
     private FragmentManager mFragmentManager;
 
     @Override
@@ -66,6 +72,25 @@ public class OcatActivity extends AppCompatActivity {
             mFragmentManager.popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void setOnion() {
+        Intent intent = new Intent(OcatConstant.INTENT_ACTION_REQUEST_HIDDEN_SERVICE);
+        intent.putExtra("hs_port", 8060);
+        startActivityForResult(intent, OcatConstant.REQUEST_HIDDEN_SERVICE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == OcatConstant.REQUEST_HIDDEN_SERVICE) {
+            if (resultCode == RESULT_OK) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putString(getString(R.string.pref_server_onion), data.getStringExtra("hs_host"));
+                edit.apply();
+            }
         }
     }
 }

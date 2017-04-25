@@ -25,6 +25,7 @@ public class SettingsFragment extends PreferenceFragment {
     private Context mContext;
     private LocalBroadcastManager localBroadcastManager;
     private BroadcastReceiver startOrbotEnd;
+    private setOnionCallback setOnionCallback;
 
     public SettingsFragment() {
 
@@ -77,7 +78,7 @@ public class SettingsFragment extends PreferenceFragment {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     localBroadcastManager.unregisterReceiver(startOrbotEnd);
-                    // TODO
+                    setOnionCallback.setOnion();
                 }
             };
 
@@ -100,5 +101,22 @@ public class SettingsFragment extends PreferenceFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+
+        if (mContext instanceof setOnionCallback) {
+            setOnionCallback = (setOnionCallback) mContext;
+        } else {
+            throw new RuntimeException(mContext.toString()
+                    + " must implement setOnionCallback");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        setOnionCallback = null;
+    }
+
+    public interface setOnionCallback {
+        void setOnion();
     }
 }
