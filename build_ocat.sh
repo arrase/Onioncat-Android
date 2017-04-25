@@ -15,5 +15,7 @@ cd external/onioncat-0.2.2.r571
 wget https://www.cypherpunk.at/onioncat_trac/export/HEAD/trunk/android/android_configure
 sh android_configure
 make
-rm ../../app/src/main/assets/empty
+
+# Install
+[ -d ../../app/src/main/assets ] || mkdir ../../app/src/main/assets/
 cp src/ocat ../../app/src/main/assets/
