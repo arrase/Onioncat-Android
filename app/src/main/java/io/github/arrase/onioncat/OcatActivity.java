@@ -1,13 +1,16 @@
 package io.github.arrase.onioncat;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import io.github.arrase.onioncat.fragments.SettingsFragment;
 import io.github.arrase.onioncat.fragments.StartOcatFragment;
+import io.github.arrase.onioncat.helpers.CheckDependenciesHelper;
 
 public class OcatActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
@@ -24,9 +27,15 @@ public class OcatActivity extends AppCompatActivity {
         // Do not overlapping fragments.
         if (savedInstanceState != null) return;
 
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, new StartOcatFragment())
-                .commit();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+
+        if (!CheckDependenciesHelper.checkAll(this)) {
+            transaction.replace(R.id.fragment_container, new SettingsFragment());
+        } else {
+            transaction.replace(R.id.fragment_container, new StartOcatFragment());
+        }
+
+        transaction.commit();
     }
 
     @Override
@@ -49,5 +58,14 @@ public class OcatActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mFragmentManager.getBackStackEntryCount() > 0) {
+            mFragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

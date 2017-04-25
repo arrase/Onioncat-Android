@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Onioncat</string>
     <string name="action_settings">Settings</string>
+    <string name="orbot_installed_summary">Orbot is not installed</string>
+    <string name="orbot">Orbot</string>
+    <string name="onion_name_summary">Onion is not set</string>
+    <string name="onion_domain">Onion domain</string>
+
+    <string name="pref_server_onion" translatable="false">pref_server_onion</string>
+    <string name="pref_orbot_installed" translatable="false">pref_orbot_installed</string>
 </resources>
