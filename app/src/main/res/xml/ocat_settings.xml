@@ -3,8 +3,7 @@
 
     <Preference
         android:key="@string/pref_orbot_installed"
-        android:defaultValue="false"
-        android:summary="@string/orbot_installed_summary"
+        android:summary="@string/orbot_is_not_installed"
         android:title="@string/orbot" />
 
     <Preference
