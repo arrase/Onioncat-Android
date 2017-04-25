@@ -10,5 +10,5 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        app:srcCompat="@drawable/backup" />
+        app:srcCompat="@drawable/power_off" />
 </RelativeLayout>
