@@ -71,19 +71,19 @@ public class SettingsFragment extends PreferenceFragment {
                 }
             });
         } else {
+            localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+
+            startOrbotEnd = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    localBroadcastManager.unregisterReceiver(startOrbotEnd);
+                    // TODO
+                }
+            };
+
             onion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
-
-                    startOrbotEnd = new BroadcastReceiver() {
-                        @Override
-                        public void onReceive(Context context, Intent intent) {
-                            localBroadcastManager.unregisterReceiver(startOrbotEnd);
-                            // TODO
-                        }
-                    };
-
                     localBroadcastManager.registerReceiver(
                             startOrbotEnd, new IntentFilter(OcatConstant.START_ORBOT_END));
 
