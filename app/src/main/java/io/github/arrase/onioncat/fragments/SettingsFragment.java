@@ -4,6 +4,7 @@ package io.github.arrase.onioncat.fragments;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import io.github.arrase.onioncat.R;
+import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.helpers.CheckDependenciesHelper;
+import io.github.arrase.onioncat.services.OrbotService;
 
 public class SettingsFragment extends PreferenceFragment {
     private Context mContext;
@@ -66,7 +69,9 @@ public class SettingsFragment extends PreferenceFragment {
             onion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    // TODO: Start Orbot and configure onion
+                    Intent intent = new Intent(mContext, OrbotService.class);
+                    intent.setAction(OcatConstant.SETUP_ONION_SERVICE);
+                    mContext.startService(intent);
                     return true;
                 }
             });
