@@ -75,8 +75,7 @@ public class OcatService extends Service {
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setOngoing(true)
-                        .setContentTitle(getString(R.string.ocat_is_running))
-                        .setContentText(getString(R.string.pref_server_onion));
+                        .setContentTitle(getString(R.string.ocat_is_running));
 
         return mBuilder.build();
     }
