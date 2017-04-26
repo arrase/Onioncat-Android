@@ -85,6 +85,8 @@ public class SettingsFragment extends PreferenceFragment {
             onion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    Toast.makeText(mContext, R.string.request_onion, Toast.LENGTH_LONG).show();
+
                     localBroadcastManager.registerReceiver(
                             startOrbotEnd, new IntentFilter(OcatConstant.START_ORBOT_END));
 
