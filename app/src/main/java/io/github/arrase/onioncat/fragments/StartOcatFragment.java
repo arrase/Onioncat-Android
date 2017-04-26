@@ -58,13 +58,11 @@ public class StartOcatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final boolean isRunning = ServicesHelper.isServiceRunning(OcatService.class, mContext);
-
         View v = inflater.inflate(R.layout.start_ocat_fragment, container, false);
 
         runOcat = (ImageView) v.findViewById(R.id.run_ocat);
 
-        if (isRunning) {
+        if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
             runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
         }
 
@@ -73,7 +71,7 @@ public class StartOcatFragment extends Fragment {
             public void onClick(View view) {
                 if (!DependenciesHelper.checkAll(mContext)) {
                     Toast.makeText(mContext, R.string.invalid_settings, Toast.LENGTH_LONG).show();
-                } else if (isRunning) {
+                } else if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
                     Toast.makeText(mContext, R.string.already_running, Toast.LENGTH_LONG).show();
                 } else {
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
