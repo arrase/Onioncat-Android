@@ -19,7 +19,8 @@ import android.widget.Toast;
 
 import io.github.arrase.onioncat.R;
 import io.github.arrase.onioncat.constants.OcatConstant;
-import io.github.arrase.onioncat.helpers.CheckDependenciesHelper;
+import io.github.arrase.onioncat.helpers.DependenciesHelper;
+import io.github.arrase.onioncat.helpers.ServicesHelper;
 import io.github.arrase.onioncat.services.OcatService;
 import io.github.arrase.onioncat.services.OrbotService;
 
@@ -80,15 +81,17 @@ public class StartOcatFragment extends Fragment {
         runOcat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CheckDependenciesHelper.checkAll(mContext)) {
+                if (!DependenciesHelper.checkAll(mContext)) {
+                    Toast.makeText(mContext, R.string.invalid_settings, Toast.LENGTH_LONG).show();
+                } else if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
+                    Toast.makeText(mContext, R.string.already_running, Toast.LENGTH_LONG).show();
+                } else {
                     localBroadcastManager.registerReceiver(
                             startOrbotEnd, new IntentFilter(OcatConstant.START_ORBOT_END));
 
                     Intent intent = new Intent(mContext, OrbotService.class);
                     intent.setAction(OcatConstant.START_ORBOT);
                     mContext.startService(intent);
-                } else {
-                    Toast.makeText(mContext, R.string.invalid_settings, Toast.LENGTH_LONG).show();
                 }
             }
         });

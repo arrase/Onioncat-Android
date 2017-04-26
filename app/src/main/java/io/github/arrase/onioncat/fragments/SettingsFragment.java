@@ -18,7 +18,7 @@ import android.widget.Toast;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import io.github.arrase.onioncat.R;
 import io.github.arrase.onioncat.constants.OcatConstant;
-import io.github.arrase.onioncat.helpers.CheckDependenciesHelper;
+import io.github.arrase.onioncat.helpers.DependenciesHelper;
 import io.github.arrase.onioncat.services.OrbotService;
 
 public class SettingsFragment extends PreferenceFragment {
@@ -39,7 +39,7 @@ public class SettingsFragment extends PreferenceFragment {
         // Orbot
         Preference installOrbot = (Preference) findPreference(getString(R.string.pref_orbot_installed));
 
-        if (CheckDependenciesHelper.checkOrbot(mContext)) {
+        if (DependenciesHelper.checkOrbot(mContext)) {
             installOrbot.setSummary(R.string.orbot_is_installed);
         } else {
             installOrbot.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

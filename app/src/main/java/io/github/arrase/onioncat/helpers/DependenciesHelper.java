@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import io.github.arrase.onioncat.R;
 
-public class CheckDependenciesHelper {
+public class DependenciesHelper {
     public static boolean checkAll(Context context) {
         return checkOrbot(context) && checkServer(context);
     }
