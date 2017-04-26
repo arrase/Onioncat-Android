@@ -18,8 +18,7 @@ import io.github.arrase.onioncat.R;
 import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.helpers.DependenciesHelper;
 import io.github.arrase.onioncat.helpers.ServicesHelper;
-import io.github.arrase.onioncat.services.OcatServiceStart;
-import io.github.arrase.onioncat.services.OcatStop;
+import io.github.arrase.onioncat.services.OcatService;
 import io.github.arrase.onioncat.services.OrbotService;
 
 public class StartOcatFragment extends Fragment {
@@ -63,7 +62,7 @@ public class StartOcatFragment extends Fragment {
 
         runOcat = (ImageView) v.findViewById(R.id.run_ocat);
 
-        if (ServicesHelper.isServiceRunning(OcatServiceStart.class, mContext)) {
+        if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
             runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
         }
 
@@ -72,9 +71,9 @@ public class StartOcatFragment extends Fragment {
             public void onClick(View view) {
                 if (!DependenciesHelper.checkAll(mContext)) {
                     Toast.makeText(mContext, R.string.invalid_settings, Toast.LENGTH_LONG).show();
-                } else if (ServicesHelper.isServiceRunning(OcatServiceStart.class, mContext)) {
+                } else if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_off));
-                    OcatStop.stop(mContext);
+                    ServicesHelper.stopOcat(mContext);
                 } else {
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
                     Intent start = new Intent(mContext, OrbotService.class);

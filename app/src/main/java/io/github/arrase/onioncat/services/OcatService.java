@@ -17,8 +17,8 @@ import java.io.IOException;
 import io.github.arrase.onioncat.R;
 import io.github.arrase.onioncat.constants.OcatConstant;
 
-public class OcatServiceStart extends Service {
-    public OcatServiceStart() {
+public class OcatService extends Service {
+    public OcatService() {
     }
 
     @Override
