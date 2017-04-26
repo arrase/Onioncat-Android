@@ -14,7 +14,6 @@ public class OcatStop {
     public static void stop(Context context) {
         final Context mContext = context;
 
-
         new Thread(new Runnable() {
             public void run() {
                 Process p;
