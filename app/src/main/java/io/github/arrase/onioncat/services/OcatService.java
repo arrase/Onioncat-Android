@@ -35,9 +35,11 @@ public class OcatService extends Service {
                 public void run() {
                     Process p;
 
-                    File appBinHome = getDir(OcatConstant.BINARY_DIRECTORY, Application.MODE_PRIVATE);
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     String onion = preferences.getString(getString(R.string.pref_server_onion), null);
+
+                    File appBinHome = getDir(OcatConstant.BINARY_DIRECTORY, Application.MODE_PRIVATE);
+                    String ocat_path = appBinHome.getAbsolutePath() + "/ocat";
 
                     if (onion != null) {
                         try {
@@ -45,7 +47,8 @@ public class OcatService extends Service {
 
                             DataOutputStream os = new DataOutputStream(p.getOutputStream());
                             os.writeBytes("ls -l /dev/tun || modprobe tun\n");
-                            os.writeBytes(appBinHome.getAbsolutePath() + "/ocat -T /dev/tun -r -B " + onion + "\n");
+                            os.writeBytes("chmod 755 " + ocat_path + "\n");
+                            os.writeBytes(ocat_path + " -T /dev/tun -r -B " + onion + "\n");
                             os.writeBytes("exit\n");
                             os.flush();
                             p.waitFor();
