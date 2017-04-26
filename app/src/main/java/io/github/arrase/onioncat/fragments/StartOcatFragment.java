@@ -19,7 +19,7 @@ import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.helpers.DependenciesHelper;
 import io.github.arrase.onioncat.helpers.ServicesHelper;
 import io.github.arrase.onioncat.services.OcatServiceStart;
-import io.github.arrase.onioncat.services.OcatServiceStop;
+import io.github.arrase.onioncat.services.OcatStop;
 import io.github.arrase.onioncat.services.OrbotService;
 
 public class StartOcatFragment extends Fragment {
@@ -74,9 +74,7 @@ public class StartOcatFragment extends Fragment {
                     Toast.makeText(mContext, R.string.invalid_settings, Toast.LENGTH_LONG).show();
                 } else if (ServicesHelper.isServiceRunning(OcatServiceStart.class, mContext)) {
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_off));
-                    Intent stop = new Intent(mContext, OcatServiceStop.class);
-                    stop.setAction(OcatConstant.STOP_OCAT);
-                    mContext.startService(stop);
+                    OcatStop.stop(mContext);
                 } else {
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
                     Intent start = new Intent(mContext, OrbotService.class);
