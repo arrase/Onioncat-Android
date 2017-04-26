@@ -1,7 +1,6 @@
 package io.github.arrase.onioncat;
 
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.fragments.SettingsFragment;
 import io.github.arrase.onioncat.fragments.StartOcatFragment;
-import io.github.arrase.onioncat.helpers.CheckDependenciesHelper;
 import io.github.arrase.onioncat.helpers.InstallHelper;
 
 public class OcatActivity extends AppCompatActivity implements
@@ -36,15 +34,9 @@ public class OcatActivity extends AppCompatActivity implements
         // Do not overlapping fragments.
         if (savedInstanceState != null) return;
 
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-
-        if (!CheckDependenciesHelper.checkAll(this)) {
-            transaction.replace(R.id.fragment_container, new SettingsFragment());
-        } else {
-            transaction.replace(R.id.fragment_container, new StartOcatFragment());
-        }
-
-        transaction.commit();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, new StartOcatFragment())
+                .commit();
     }
 
     @Override
