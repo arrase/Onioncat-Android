@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import io.github.arrase.onioncat.R;
+import io.github.arrase.onioncat.constants.OcatConstant;
+import io.github.arrase.onioncat.services.OrbotService;
 
 
 public class BootReceiver extends BroadcastReceiver {
@@ -16,7 +18,9 @@ public class BootReceiver extends BroadcastReceiver {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             if (prefs.getBoolean(context.getString(R.string.pref_run_on_boot), false)) {
-                // TODO
+                Intent ocat = new Intent(context, OrbotService.class);
+                ocat.setAction(OcatConstant.START_OCAT);
+                context.startService(intent);
             }
         }
     }

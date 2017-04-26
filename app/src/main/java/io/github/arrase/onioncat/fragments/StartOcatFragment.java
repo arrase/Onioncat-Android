@@ -2,12 +2,9 @@ package io.github.arrase.onioncat.fragments;
 
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,8 +24,6 @@ import io.github.arrase.onioncat.services.OrbotService;
 public class StartOcatFragment extends Fragment {
     private ImageView runOcat;
     private Context mContext;
-    private LocalBroadcastManager localBroadcastManager;
-    private BroadcastReceiver startOrbotEnd;
     private OpenSettingsCallback openSettingsCallback;
 
     public StartOcatFragment() {
@@ -63,18 +58,6 @@ public class StartOcatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
-
-        startOrbotEnd = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                localBroadcastManager.unregisterReceiver(startOrbotEnd);
-                Intent ocat = new Intent(mContext, OcatService.class);
-                ocat.setAction(OcatConstant.START_OCAT);
-                mContext.startService(ocat);
-            }
-        };
-
         View v = inflater.inflate(R.layout.start_ocat_fragment, container, false);
 
         runOcat = (ImageView) v.findViewById(R.id.run_ocat);
@@ -86,11 +69,8 @@ public class StartOcatFragment extends Fragment {
                 } else if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
                     Toast.makeText(mContext, R.string.already_running, Toast.LENGTH_LONG).show();
                 } else {
-                    localBroadcastManager.registerReceiver(
-                            startOrbotEnd, new IntentFilter(OcatConstant.START_ORBOT_END));
-
                     Intent intent = new Intent(mContext, OrbotService.class);
-                    intent.setAction(OcatConstant.START_ORBOT);
+                    intent.setAction(OcatConstant.START_OCAT);
                     mContext.startService(intent);
                 }
             }

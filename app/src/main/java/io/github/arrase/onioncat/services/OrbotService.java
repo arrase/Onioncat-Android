@@ -15,7 +15,7 @@ public class OrbotService extends Service {
 
     private OrbotHelper orbotHelper;
     private int mStartId;
-    private LocalBroadcastManager broadcaster;
+    private Intent mStartIntent;
 
     private StatusCallback statusCallback = new StatusCallback() {
         private boolean waitPolipo = false; // Ugly fix
@@ -34,8 +34,17 @@ public class OrbotService extends Service {
                 waitPolipo = false;
             }
 
-            broadcaster = LocalBroadcastManager.getInstance(OrbotService.this);
-            broadcaster.sendBroadcast(new Intent(OcatConstant.START_ORBOT_END));
+            switch (mStartIntent.getAction()) {
+                case OcatConstant.START_OCAT:
+                    Intent ocat = new Intent(getApplicationContext(), OcatService.class);
+                    ocat.setAction(OcatConstant.START_OCAT);
+                    getApplicationContext().startService(ocat);
+                    break;
+                case OcatConstant.START_ORBOT:
+                    LocalBroadcastManager broadcaster = LocalBroadcastManager.getInstance(OrbotService.this);
+                    broadcaster.sendBroadcast(new Intent(OcatConstant.START_ORBOT_END));
+                    break;
+            }
 
             orbotHelper.removeStatusCallback(statusCallback);
             OrbotService.this.stopSelf(mStartId);
@@ -84,6 +93,7 @@ public class OrbotService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
         mStartId = startId;
+        mStartIntent = intent;
         orbotHelper.addStatusCallback(statusCallback);
         orbotHelper.init();
 
