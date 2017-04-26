@@ -18,7 +18,8 @@ import io.github.arrase.onioncat.R;
 import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.helpers.DependenciesHelper;
 import io.github.arrase.onioncat.helpers.ServicesHelper;
-import io.github.arrase.onioncat.services.OcatService;
+import io.github.arrase.onioncat.services.OcatServiceStart;
+import io.github.arrase.onioncat.services.OcatServiceStop;
 import io.github.arrase.onioncat.services.OrbotService;
 
 public class StartOcatFragment extends Fragment {
@@ -62,7 +63,7 @@ public class StartOcatFragment extends Fragment {
 
         runOcat = (ImageView) v.findViewById(R.id.run_ocat);
 
-        if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
+        if (ServicesHelper.isServiceRunning(OcatServiceStart.class, mContext)) {
             runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
         }
 
@@ -71,13 +72,16 @@ public class StartOcatFragment extends Fragment {
             public void onClick(View view) {
                 if (!DependenciesHelper.checkAll(mContext)) {
                     Toast.makeText(mContext, R.string.invalid_settings, Toast.LENGTH_LONG).show();
-                } else if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
-                    Toast.makeText(mContext, R.string.already_running, Toast.LENGTH_LONG).show();
+                } else if (ServicesHelper.isServiceRunning(OcatServiceStart.class, mContext)) {
+                    runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_off));
+                    Intent stop = new Intent(mContext, OcatServiceStop.class);
+                    stop.setAction(OcatConstant.STOP_OCAT);
+                    mContext.startService(stop);
                 } else {
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
-                    Intent intent = new Intent(mContext, OrbotService.class);
-                    intent.setAction(OcatConstant.START_OCAT);
-                    mContext.startService(intent);
+                    Intent start = new Intent(mContext, OrbotService.class);
+                    start.setAction(OcatConstant.START_OCAT);
+                    mContext.startService(start);
                 }
             }
         });

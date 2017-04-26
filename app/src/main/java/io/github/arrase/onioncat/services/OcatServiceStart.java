@@ -17,8 +17,8 @@ import java.io.IOException;
 import io.github.arrase.onioncat.R;
 import io.github.arrase.onioncat.constants.OcatConstant;
 
-public class OcatService extends Service {
-    public OcatService() {
+public class OcatServiceStart extends Service {
+    public OcatServiceStart() {
     }
 
     @Override
@@ -46,7 +46,7 @@ public class OcatService extends Service {
                             p = Runtime.getRuntime().exec("su");
 
                             DataOutputStream os = new DataOutputStream(p.getOutputStream());
-                            os.writeBytes(ocat_path + " -T /dev/tun -r -B " + onion + "\n");
+                            os.writeBytes(ocat_path + " -P " + ocat_path + ".pid -T /dev/tun -r -B " + onion + "\n");
                             os.writeBytes("exit\n");
                             os.flush();
                             p.waitFor();

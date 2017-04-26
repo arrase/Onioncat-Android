@@ -16,6 +16,5 @@
     <string name="invalid_settings">Invalid settings</string>
     <string name="request_onion">Requesting hidden service</string>
     <string name="run_on_boot">Run on boot</string>
-    <string name="already_running">Already running</string>
 
 </resources>

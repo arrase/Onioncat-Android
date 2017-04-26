@@ -36,7 +36,7 @@ public class OrbotService extends Service {
 
             switch (mStartIntent.getAction()) {
                 case OcatConstant.START_OCAT:
-                    Intent ocat = new Intent(getApplicationContext(), OcatService.class);
+                    Intent ocat = new Intent(getApplicationContext(), OcatServiceStart.class);
                     ocat.setAction(OcatConstant.START_OCAT);
                     getApplicationContext().startService(ocat);
                     break;
