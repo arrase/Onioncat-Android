@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.fragments.SettingsFragment;
@@ -16,7 +14,8 @@ import io.github.arrase.onioncat.fragments.StartOcatFragment;
 import io.github.arrase.onioncat.helpers.InstallHelper;
 
 public class OcatActivity extends AppCompatActivity implements
-        SettingsFragment.setOnionCallback {
+        SettingsFragment.setOnionCallback,
+        StartOcatFragment.OpenSettingsCallback {
 
     private FragmentManager mFragmentManager;
 
@@ -37,27 +36,6 @@ public class OcatActivity extends AppCompatActivity implements
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, new StartOcatFragment())
                 .commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_ocat, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, new SettingsFragment())
-                    .commit();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -86,5 +64,13 @@ public class OcatActivity extends AppCompatActivity implements
                 edit.apply();
             }
         }
+    }
+
+    @Override
+    public void openSettings() {
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, new SettingsFragment())
+                .addToBackStack(null)
+                .commit();
     }
 }

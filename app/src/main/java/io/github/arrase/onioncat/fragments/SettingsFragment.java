@@ -108,7 +108,7 @@ public class SettingsFragment extends PreferenceFragment {
             setOnionCallback = (setOnionCallback) mContext;
         } else {
             throw new RuntimeException(mContext.toString()
-                    + " must implement setOnionCallback");
+                    + " must implement OpenSettingsCallback");
         }
     }
 
