@@ -46,7 +46,7 @@ public class OcatService extends Service {
                             p = Runtime.getRuntime().exec("su");
 
                             DataOutputStream os = new DataOutputStream(p.getOutputStream());
-                            os.writeBytes("chmod 755 " + ocat_path + " && " + ocat_path + " -T /dev/tun -r -B " + onion + "\n");
+                            os.writeBytes(ocat_path + " -T /dev/tun -r -B " + onion + "\n");
                             os.writeBytes("exit\n");
                             os.flush();
                             p.waitFor();
