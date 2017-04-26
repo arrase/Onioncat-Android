@@ -41,6 +41,10 @@ public class InstallHelper {
             in.close();
             out.flush();
             out.close();
+
+            ocat_bin.setExecutable(true, false);
+            ocat_bin.setReadable(true, false);
+
         } catch (IOException e) {
             Log.e("OCAT", "Failed to copy ocat bin", e);
             e.printStackTrace();
