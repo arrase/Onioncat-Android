@@ -11,4 +11,9 @@
         android:summary="@string/onion_name_summary"
         android:title="@string/onion_domain" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_run_on_boot"
+        android:title="@string/run_on_boot" />
+
 </PreferenceScreen>
