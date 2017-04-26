@@ -1,6 +1,7 @@
 package io.github.arrase.onioncat.helpers;
 
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
@@ -11,43 +12,39 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import io.github.arrase.onioncat.constants.OcatConstant;
+
 public class InstallHelper {
 
-    public static void copyAssets(Context context, File appBin) {
+    public static void copyAssets(Context context) {
+        InputStream in;
+        OutputStream out;
+
+        File appBin = context.getDir(OcatConstant.BINARY_DIRECTORY, Application.MODE_PRIVATE);
+        File ocat_bin = new File(appBin.getAbsolutePath() + "/ocat");
+
+        if (ocat_bin.exists()) return;
+
         AssetManager assetManager = context.getAssets();
-        String[] files;
 
         try {
-            files = assetManager.list("");
+            in = assetManager.open("ocat");
+            out = new FileOutputStream(ocat_bin);
 
-            for (String filename : files) {
-                InputStream in;
-                OutputStream out;
+            byte[] buffer = new byte[1024];
+            int read;
 
-                try {
-                    in = assetManager.open(filename);
-                    out = new FileOutputStream(new File(appBin.getAbsolutePath() + filename));
-
-                    copyFile(in, out);
-
-                    in.close();
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    Log.e("tag", "Failed to copy asset file: " + filename, e);
-                    e.printStackTrace();
-                }
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
             }
+
+            in.close();
+            out.flush();
+            out.close();
         } catch (IOException e) {
+            Log.e("OCAT", "Failed to copy ocat bin", e);
             e.printStackTrace();
         }
-    }
 
-    private static void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
     }
 }

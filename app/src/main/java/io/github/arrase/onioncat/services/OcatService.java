@@ -45,7 +45,7 @@ public class OcatService extends Service {
 
                             DataOutputStream os = new DataOutputStream(p.getOutputStream());
                             os.writeBytes("ls -l /dev/tun || modprobe tun\n");
-                            os.writeBytes(appBinHome.getAbsolutePath() + "ocat -T /dev/tun -r -B " + onion + "\n");
+                            os.writeBytes(appBinHome.getAbsolutePath() + "/ocat -T /dev/tun -r -B " + onion + "\n");
                             os.writeBytes("exit\n");
                             os.flush();
                             p.waitFor();

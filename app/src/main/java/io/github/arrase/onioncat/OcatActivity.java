@@ -1,6 +1,5 @@
 package io.github.arrase.onioncat;
 
-import android.app.Application;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -11,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.io.File;
 
 import io.github.arrase.onioncat.constants.OcatConstant;
 import io.github.arrase.onioncat.fragments.SettingsFragment;
@@ -34,10 +31,7 @@ public class OcatActivity extends AppCompatActivity implements
 
         mFragmentManager = getFragmentManager();
 
-        File appBinHome = getDir(OcatConstant.BINARY_DIRECTORY, Application.MODE_PRIVATE);
-        if (appBinHome.mkdir()) {
-            InstallHelper.copyAssets(this, appBinHome);
-        }
+        InstallHelper.copyAssets(this);
 
         // Do not overlapping fragments.
         if (savedInstanceState != null) return;
