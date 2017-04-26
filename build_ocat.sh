@@ -11,8 +11,8 @@ tar xzf onioncat-0.2.2.r571.tar.gz -C external/
 rm onioncat-0.2.2.r571.tar.gz
 
 # Build
+cp android_configure.sh external/onioncat-0.2.2.r571/
 cd external/onioncat-0.2.2.r571
-wget https://www.cypherpunk.at/onioncat_trac/export/HEAD/trunk/android/android_configure
 sh android_configure
 make
 
