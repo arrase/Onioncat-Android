@@ -2,6 +2,6 @@
 
 An Anonymous VPN-Adapter
 
-### Site
+### Onioncat Site
 
 https://www.onioncat.org/
