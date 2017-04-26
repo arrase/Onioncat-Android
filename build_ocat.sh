@@ -2,6 +2,22 @@
 
 
 export ANDROID_NDK=$(cat local.properties |grep ndk.dir|awk -F '=' '{print $2}')
+export CROSS_COMPILE=arm-linux-androideabi
+export ANDROID_PREFIX=${ANDROID_NDK}/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64
+export SYSROOT=${ANDROID_NDK}/platforms/android-16/arch-arm
+export CROSS_PATH=${ANDROID_PREFIX}/bin/${CROSS_COMPILE}
+
+export CPP=${CROSS_PATH}-cpp
+export AR=${CROSS_PATH}-ar
+export AS=${CROSS_PATH}-as
+export NM=${CROSS_PATH}-nm
+export CC=${CROSS_PATH}-gcc
+export LD=${CROSS_PATH}-ld
+export RANLIB=${CROSS_PATH}-ranlib
+
+export CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${ANDROID_PREFIX}/include -fvisibility=default -fPIE"
+export CPPFLAGS="${CFLAGS}"
+export LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L${ANDROID_PREFIX}/lib -rdynamic -fPIE -pie"
 
 # Download
 [ -d external ] && rm -rf external
@@ -11,9 +27,8 @@ tar xzf onioncat-0.2.2.r571.tar.gz -C external/
 rm onioncat-0.2.2.r571.tar.gz
 
 # Build
-cp android_configure.sh external/onioncat-0.2.2.r571/
 cd external/onioncat-0.2.2.r571
-sh android_configure
+./configure --host=${CROSS_COMPILE} "$@"
 make
 
 # Install
