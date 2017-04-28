@@ -3,6 +3,7 @@
     <string name="pref_set_server_onion" translatable="false">pref_set_server_onion</string>
     <string name="pref_orbot_installed" translatable="false">pref_orbot_installed</string>
     <string name="pref_run_on_boot" translatable="false">pref_run_on_boot</string>
+    <string name="pref_donate" translatable="false">pref_donate</string>
 
     <string name="app_name">Onioncat</string>
     <string name="action_settings">Settings</string>
@@ -21,5 +22,7 @@
     <string name="delete">Delete</string>
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
+    <string name="donate">Donate</string>
+    <string name="donate_some_bucks_with_paypal">Donate some bucks with Paypal</string>
 
 </resources>

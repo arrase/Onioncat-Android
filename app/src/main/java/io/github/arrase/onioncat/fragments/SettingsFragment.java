@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -94,6 +95,17 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 }
             });
         }
+
+        // Donate
+        Preference donate = (Preference) findPreference(getString(R.string.pref_donate));
+        donate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.me/OnPanic"));
+                startActivity(browserIntent);
+                return true;
+            }
+        });
     }
 
     @Override

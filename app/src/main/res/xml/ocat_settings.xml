@@ -16,4 +16,9 @@
         android:key="@string/pref_run_on_boot"
         android:title="@string/run_on_boot" />
 
+    <Preference
+        android:key="@string/pref_donate"
+        android:summary="@string/donate_some_bucks_with_paypal"
+        android:title="@string/donate" />
+
 </PreferenceScreen>
