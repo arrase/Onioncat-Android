@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import io.github.arrase.onioncat.R;
@@ -22,7 +22,7 @@ import io.github.arrase.onioncat.services.OcatService;
 import io.github.arrase.onioncat.services.OrbotService;
 
 public class StartOcatFragment extends Fragment {
-    private ImageView runOcat;
+    private ImageButton runOcat;
     private Context mContext;
     private OpenSettingsCallback openSettingsCallback;
 
@@ -60,7 +60,7 @@ public class StartOcatFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.start_ocat_fragment, container, false);
 
-        runOcat = (ImageView) v.findViewById(R.id.run_ocat);
+        runOcat = (ImageButton) v.findViewById(R.id.run_ocat);
 
         if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
             runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
@@ -72,6 +72,7 @@ public class StartOcatFragment extends Fragment {
                 if (!DependenciesHelper.checkAll(mContext)) {
                     Toast.makeText(mContext, R.string.invalid_settings, Toast.LENGTH_LONG).show();
                 } else if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
+                    Toast.makeText(mContext, R.string.stopping_ocat, Toast.LENGTH_LONG).show();
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_off));
                     ServicesHelper.stopOcat(mContext);
                 } else {

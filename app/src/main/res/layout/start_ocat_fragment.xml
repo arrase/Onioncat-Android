@@ -4,11 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/run_ocat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
+        android:background="@null"
+        android:contentDescription="@string/power_button"
         app:srcCompat="@drawable/power_off" />
+
 </RelativeLayout>
