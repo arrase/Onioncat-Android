@@ -9,7 +9,7 @@
     <string name="orbot_is_not_installed">Orbot is not installed</string>
     <string name="orbot_is_installed">Orbot is installed</string>
     <string name="orbot">Orbot</string>
-    <string name="onion_name_summary">Onion is not set</string>
+    <string name="onion_is_not_set">Onion is not set</string>
     <string name="onion_domain">Onion domain</string>
     <string name="domain_to_clipboard">Copied to clipboard</string>
     <string name="ocat_is_running">Ocat is running</string>

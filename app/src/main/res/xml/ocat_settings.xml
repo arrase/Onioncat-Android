@@ -8,7 +8,7 @@
 
     <Preference
         android:key="@string/pref_set_server_onion"
-        android:summary="@string/onion_name_summary"
+        android:summary="@string/onion_is_not_set"
         android:title="@string/onion_domain" />
 
     <SwitchPreference

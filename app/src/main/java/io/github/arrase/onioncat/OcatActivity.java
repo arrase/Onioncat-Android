@@ -53,7 +53,7 @@ public class OcatActivity extends AppCompatActivity implements
         intent.putExtra("hs_port", 8060);
         startActivityForResult(intent, OcatConstant.REQUEST_HIDDEN_SERVICE);
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == OcatConstant.REQUEST_HIDDEN_SERVICE) {

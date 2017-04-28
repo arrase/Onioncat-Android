@@ -20,7 +20,7 @@ import io.github.arrase.onioncat.dialogs.OnionActionsDialog;
 import io.github.arrase.onioncat.helpers.DependenciesHelper;
 import io.github.arrase.onioncat.services.OrbotService;
 
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private Context mContext;
     private LocalBroadcastManager localBroadcastManager;
     private BroadcastReceiver startOrbotEnd;
@@ -113,6 +113,28 @@ public class SettingsFragment extends PreferenceFragment {
     public void onDetach() {
         super.onDetach();
         setOnionCallback = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceScreen().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getPreferenceScreen().getSharedPreferences()
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_server_onion))) {
+            Preference serverOnionPref = findPreference(getString(R.string.pref_set_server_onion));
+            serverOnionPref.setSummary(sharedPreferences.getString(key, getString(R.string.onion_is_not_set)));
+        }
     }
 
     public interface setOnionCallback {
