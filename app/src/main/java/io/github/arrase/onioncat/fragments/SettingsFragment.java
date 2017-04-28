@@ -2,8 +2,6 @@ package io.github.arrase.onioncat.fragments;
 
 
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -18,6 +16,7 @@ import android.widget.Toast;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import io.github.arrase.onioncat.R;
 import io.github.arrase.onioncat.constants.OcatConstant;
+import io.github.arrase.onioncat.dialogs.OnionActionsDialog;
 import io.github.arrase.onioncat.helpers.DependenciesHelper;
 import io.github.arrase.onioncat.services.OrbotService;
 
@@ -58,16 +57,14 @@ public class SettingsFragment extends PreferenceFragment {
 
         if (domainName != null) {
             onion.setSummary(domainName);
-
             onion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("onion", domainName);
-                    clipboard.setPrimaryClip(clip);
-
-                    Toast.makeText(mContext, R.string.domain_to_clipboard, Toast.LENGTH_LONG).show();
-
+                    Bundle arguments = new Bundle();
+                    arguments.putString("onion", domainName);
+                    OnionActionsDialog dialog = new OnionActionsDialog();
+                    dialog.setArguments(arguments);
+                    dialog.show(getFragmentManager(), "OnionActionsDialog");
                     return true;
                 }
             });

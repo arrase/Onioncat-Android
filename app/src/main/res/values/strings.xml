@@ -18,5 +18,9 @@
     <string name="run_on_boot">Run on boot</string>
     <string name="stopping_ocat">Stopping ocat</string>
     <string name="power_button">Power button</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="delete">Delete</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
