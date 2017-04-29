@@ -27,5 +27,6 @@
     <string name="info">Info</string>
     <string name="ipv6_to_clipboard">IPv6 copied to clipboard</string>
     <string name="ocat_is_not_running">Ocat is not running</string>
+    <string name="starting_ocat">Starting ocat</string>
 
 </resources>

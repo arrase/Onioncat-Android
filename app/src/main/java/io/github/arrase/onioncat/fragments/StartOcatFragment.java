@@ -91,6 +91,7 @@ public class StartOcatFragment extends Fragment {
                     ServicesHelper.stopOcat(mContext);
                 } else {
                     runOcat.setImageDrawable(getResources().getDrawable(R.drawable.power_on));
+                    Toast.makeText(mContext, R.string.starting_ocat, Toast.LENGTH_LONG).show();
                     Intent start = new Intent(mContext, OrbotService.class);
                     start.setAction(OcatConstant.START_OCAT);
                     mContext.startService(start);
