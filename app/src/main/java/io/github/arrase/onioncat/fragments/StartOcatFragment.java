@@ -2,6 +2,8 @@ package io.github.arrase.onioncat.fragments;
 
 
 import android.app.Fragment;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,9 +48,21 @@ public class StartOcatFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            openSettingsCallback.openSettings();
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                openSettingsCallback.openSettings();
+                return true;
+            case R.id.get_ipv6:
+                if (ServicesHelper.isServiceRunning(OcatService.class, mContext)) {
+                    String ip = ServicesHelper.getOcatIPv6(mContext);
+                    ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("ipv6", ip);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(mContext, R.string.ipv6_to_clipboard, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(mContext, R.string.ocat_is_not_running, Toast.LENGTH_LONG).show();
+                }
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

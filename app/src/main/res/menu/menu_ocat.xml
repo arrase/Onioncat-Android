@@ -4,6 +4,13 @@
     tools:context="io.github.arrase.onioncat.OcatActivity">
 
     <item
+        android:id="@+id/get_ipv6"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:orderInCategory="8888"
+        android:title="@string/info"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_manage"
         android:orderInCategory="9999"
