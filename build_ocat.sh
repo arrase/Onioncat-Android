@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export OCAT_VERSION=onioncat-0.2.2.r578
+
 export ANDROID_NDK=$(cat local.properties |grep ndk.dir|awk -F '=' '{print $2}')
 export CROSS_COMPILE=arm-linux-androideabi
 export ANDROID_PREFIX=${ANDROID_NDK}/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64
