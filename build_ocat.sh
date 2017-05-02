@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+export OCAT_VERSION=onioncat-0.2.2.r578
 export ANDROID_NDK=$(cat local.properties |grep ndk.dir|awk -F '=' '{print $2}')
 export CROSS_COMPILE=arm-linux-androideabi
 export ANDROID_PREFIX=${ANDROID_NDK}/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64
@@ -22,12 +22,12 @@ export LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L${ANDROID_PREFIX}/lib -rdynami
 # Download
 [ -d external ] && rm -rf external
 mkdir external
-wget https://www.cypherpunk.at/ocat/download/Source/current/onioncat-0.2.2.r578.tar.gz
-tar xzf onioncat-0.2.2.r578.tar.gz -C external/
-rm onioncat-0.2.2.r578.tar.gz
+wget https://www.cypherpunk.at/ocat/download/Source/current/${OCAT_VERSION}.tar.gz
+tar xzf ${OCAT_VERSION}.tar.gz -C external/
+rm ${OCAT_VERSION}.tar.gz
 
 # Build
-cd external/onioncat-0.2.2.r578
+cd external/${OCAT_VERSION}
 ./configure --host=${CROSS_COMPILE} "$@"
 make
 
