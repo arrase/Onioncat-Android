@@ -22,15 +22,16 @@ export LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L${ANDROID_PREFIX}/lib -rdynami
 # Download
 [ -d external ] && rm -rf external
 mkdir external
-wget https://www.cypherpunk.at/ocat/download/Source/current/onioncat-0.2.2.r571.tar.gz
-tar xzf onioncat-0.2.2.r571.tar.gz -C external/
-rm onioncat-0.2.2.r571.tar.gz
+wget https://www.cypherpunk.at/ocat/download/Source/current/onioncat-0.2.2.r578.tar.gz
+tar xzf onioncat-0.2.2.r578.tar.gz -C external/
+rm onioncat-0.2.2.r578.tar.gz
 
 # Build
-cd external/onioncat-0.2.2.r571
+cd external/onioncat-0.2.2.r578
 ./configure --host=${CROSS_COMPILE} "$@"
 make
 
 # Install
 [ -d ../../app/src/main/assets ] || mkdir ../../app/src/main/assets/
 cp src/ocat ../../app/src/main/assets/
+cp ocat-ifup ../../app/src/main/assets/

@@ -40,13 +40,14 @@ public class OcatService extends Service {
 
                     File appBinHome = getDir(OcatConstant.BINARY_DIRECTORY, Application.MODE_PRIVATE);
                     String ocat_path = appBinHome.getAbsolutePath() + "/ocat";
+                    String ocat_ifup = appBinHome.getAbsolutePath() + "/ocat-ifup";
 
                     if (onion != null) {
                         try {
                             p = Runtime.getRuntime().exec("su");
 
                             DataOutputStream os = new DataOutputStream(p.getOutputStream());
-                            os.writeBytes(ocat_path + " -P " + ocat_path + ".pid -T /dev/tun -r -B " + onion + "\n");
+                            os.writeBytes(ocat_path + " -e " + ocat_ifup + " -P " + ocat_path + ".pid -T /dev/tun -C -r -B " + onion + "\n");
                             os.writeBytes("exit\n");
                             os.flush();
                             p.waitFor();

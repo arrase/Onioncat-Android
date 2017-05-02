@@ -9,4 +9,5 @@
 .externalNativeBuild
 external
 app/src/main/assets/ocat
+app/src/main/assets/ocat-ifup
 .idea

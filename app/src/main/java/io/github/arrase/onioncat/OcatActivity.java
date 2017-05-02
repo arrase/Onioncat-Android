@@ -28,7 +28,8 @@ public class OcatActivity extends AppCompatActivity implements
 
         mFragmentManager = getFragmentManager();
 
-        InstallHelper.copyAssets(this);
+        InstallHelper.copyAsset(this, "ocat");
+        InstallHelper.copyAsset(this, "ocat-ifup");
 
         // Do not overlapping fragments.
         if (savedInstanceState != null) return;

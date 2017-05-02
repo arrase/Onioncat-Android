@@ -16,20 +16,20 @@ import io.github.arrase.onioncat.constants.OcatConstant;
 
 public class InstallHelper {
 
-    public static void copyAssets(Context context) {
+    public static void copyAsset(Context context, String name) {
         InputStream in;
         OutputStream out;
 
         File appBin = context.getDir(OcatConstant.BINARY_DIRECTORY, Application.MODE_PRIVATE);
-        File ocat_bin = new File(appBin.getAbsolutePath() + "/ocat");
+        File asset = new File(appBin.getAbsolutePath() + "/" + name);
 
-        if (ocat_bin.exists()) return;
+        if (asset.exists()) return;
 
         AssetManager assetManager = context.getAssets();
 
         try {
-            in = assetManager.open("ocat");
-            out = new FileOutputStream(ocat_bin);
+            in = assetManager.open(name);
+            out = new FileOutputStream(asset);
 
             byte[] buffer = new byte[1024];
             int read;
@@ -42,11 +42,11 @@ public class InstallHelper {
             out.flush();
             out.close();
 
-            ocat_bin.setExecutable(true, false);
-            ocat_bin.setReadable(true, false);
+            asset.setExecutable(true, false);
+            asset.setReadable(true, false);
 
         } catch (IOException e) {
-            Log.e("OCAT", "Failed to copy ocat bin", e);
+            Log.e("OCAT", "Failed to copy: " + name, e);
             e.printStackTrace();
         }
 
